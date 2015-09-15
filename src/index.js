@@ -50,6 +50,12 @@ exports.VncSnapshot = class VncSnapshot {
     rc.requestUpdate(false, 0, 0, rc.width, rc.height);
   }
 
+  end() {
+    if(this.connection) {
+      this.connection.end();
+    }
+  }
+
 }
 
 function parseRectAsRGBBuffer(rect) {
