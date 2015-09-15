@@ -26,8 +26,7 @@ exports.VncSnapshot = class VncSnapshot {
       options = {};
     }
 
-    rc.on('rect', function(rect) {
-
+    rc.once('rect', function(rect) {
       const png = new pngjs.PNG({width: rect.width, height: rect.height});
       png.data = parseRectAsRGBABuffer(rect);
       png.on('error', callback);
