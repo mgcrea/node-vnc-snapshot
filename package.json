@@ -1,0 +1,18 @@
+{
+  "name": "vnc-snapshot",
+  "version": "0.2.0",
+  "description": "NodeJS VNC snapshot tool",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gm": "^1.18.1",
+    "pngjs": "^0.4.0",
+    "rfb2": "0.0.10"
+  }
+}
