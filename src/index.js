@@ -77,7 +77,7 @@ function parseRectAsRGBABuffer(rect) {
     rgba[j++] = rect.data[i + 2];
     rgba[j++] = rect.data[i + 1];
     rgba[j++] = rect.data[i];
-    rgba[j++] = rect.data[i + 3];
+    rgba[j++] = 255;
   }
 
   return rgba;
