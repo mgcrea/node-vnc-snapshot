@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gm": "^1.18.1",
+    "gm": "^1.20.0",
     "pngjs": "^0.4.0",
     "rfb2": "0.0.10"
   }
