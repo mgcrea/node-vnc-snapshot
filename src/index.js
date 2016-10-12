@@ -1,7 +1,7 @@
 'use strict';
 
 var rfb = require('rfb2');
-var pngjs = require('pngjs');
+var PNG = require('pngjs').PNG;
 var gm = require('gm');
 
 exports.VncSnapshot = class VncSnapshot {
@@ -27,7 +27,7 @@ exports.VncSnapshot = class VncSnapshot {
     }
 
     rc.once('rect', function(rect) {
-      const png = new pngjs.PNG({width: rect.width, height: rect.height});
+      const png = new PNG({width: rect.width, height: rect.height});
       png.data = parseRectAsRGBABuffer(rect);
       png.on('error', callback);
 
@@ -83,5 +83,3 @@ function parseRectAsRGBABuffer(rect) {
   return rgba;
 
 }
-
-
