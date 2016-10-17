@@ -23,6 +23,11 @@
     "rfb2": "0.0.11"
   },
   "devDependencies": {
-    "babel-cli": "^6.16.0"
+    "babel-cli": "^6.16.0",
+    "babel-plugin-istanbul": "^2.0.1",
+    "babel-plugin-transform-class-properties": "^6.16.0",
+    "babel-plugin-transform-function-bind": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0"
   }
 }
