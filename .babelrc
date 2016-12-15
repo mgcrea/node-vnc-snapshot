@@ -1,16 +1,4 @@
 {
-  "presets": [
-    "es2015",
-  ],
-  "plugins": [
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    "transform-function-bind"
-  ],
-  "env": {
-    "test": {
-      "sourceMaps": "inline",
-      "plugins": ["istanbul"]
-    }
-  }
+  "presets": ["es2015"],
+  "plugins": ["transform-class-properties", "transform-function-bind", "transform-object-rest-spread"]
 }
