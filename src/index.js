@@ -3,7 +3,6 @@ import fs from 'fs';
 import rfb from 'rfb2';
 import gm from 'gm';
 import {PNG} from 'pngjs';
-import Promise from 'bluebird';
 
 import {parseRectAsRGBBuffer, parseRectAsRGBABuffer} from './utils/parse';
 
