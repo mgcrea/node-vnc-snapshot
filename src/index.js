@@ -4,9 +4,9 @@ import rfb from 'rfb2';
 import gm from 'gm';
 import {PNG} from 'pngjs';
 
-import {parseRectAsRGBBuffer, parseRectAsRGBABuffer} from './utils/parse';
+import {parseRectAsRGBABuffer} from './utils/parse';
 
-export default class VncSnapshot {
+export class VncSnapshot {
 
   constructor(config = {host: '127.0.0.1', port: 5900}) {
     this.config = config;
@@ -83,6 +83,8 @@ export const saveSnapshot = (filePath, opts = {}, takeOpts = {}) =>
         readStream.pipe(writeStream);
       }).return(filePath)
     );
+
+export default takeSnapshot;
 
 /*
 rc.once('rect', (rect) => {
