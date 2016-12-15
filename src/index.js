@@ -58,7 +58,10 @@ export const takeStreamSnapshot = (opts = {}, takeOpts = {}) => {
   return Promise.resolve()
     .then(() => snapshot.connect())
     .then(() => snapshot.take(takeOpts))
-    .tap(() => snapshot.end());
+    .then((readStream) => {
+      snapshot.end();
+      return readStream;
+    });
 };
 
 export const takeSnapshot = (opts = {}, takeOpts = {}) =>
@@ -79,9 +82,9 @@ export const saveSnapshot = (filePath, opts = {}, takeOpts = {}) =>
         readStream.on('error', reject);
         const writeStream = fs.createWriteStream(filePath);
         writeStream.on('error', reject);
-        writeStream.on('finish', resolve);
+        writeStream.on('finish', () => { resolve(filePath); });
         readStream.pipe(writeStream);
-      }).return(filePath)
+      })
     );
 
 export default takeSnapshot;
