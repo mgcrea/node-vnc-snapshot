@@ -31,11 +31,14 @@ export class VncSnapshot {
         let readStream = png.pack();
         // Required to have a proper file
         readStream = gm(readStream);
-        if (options.a) {
-          readStream = readStream.antialias(!!options.a);
+        if (options.format || options.f) {
+          readStream = readStream.setFormat(options.format || options.f);
         }
-        if (options.w || options.h) {
-          readStream = readStream.resize(options.w || null, options.h || null, options.f ? '!' : null);
+        if (options.antialias || options.a) {
+          readStream = readStream.antialias(!!(options.antialias || options.a));
+        }
+        if (options.width || options.w || options.height || options.h) {
+          readStream = readStream.resize(options.width || options.w || null, options.height || options.h || null, (options.force || options.f) ? '!' : null);
         }
         readStream = readStream.stream();
         readStream.on('error', reject);
