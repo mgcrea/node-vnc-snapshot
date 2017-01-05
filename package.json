@@ -1,6 +1,6 @@
 {
   "name": "vnc-snapshot",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "NodeJS VNC snapshot tool",
   "main": "lib/index.js",
   "scripts": {
