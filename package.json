@@ -17,7 +17,6 @@
   "repository": "github:mgcrea/node-vnc-snapshot",
   "license": "MIT",
   "dependencies": {
-    "gm": "^1.23.0",
     "pngjs": "^3.0.0",
     "rfb2": "0.0.11"
   },

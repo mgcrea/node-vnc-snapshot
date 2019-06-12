@@ -11,7 +11,7 @@ Easily take a snapshot from a running VNC server.
 - Grab a readStream:
 
 ```js
-takeStreamSnapshot({host, password}, {w: 1024, h: 768})
+takeStreamSnapshot({host, password}, {})
   .then((readStream) => {
   })
 ```
@@ -19,7 +19,7 @@ takeStreamSnapshot({host, password}, {w: 1024, h: 768})
 - Grab a buffer:
 
 ```js
-takeSnapshot({host, password}, {w: 1024, h: 768})
+takeSnapshot({host, password}, {})
   .then((buffer) => {
     expect(buffer).toBeA(Buffer);
     expect(buffer.slice(0, 8).compare(PNG_HEADER)).toEqual(0);
@@ -29,7 +29,7 @@ takeSnapshot({host, password}, {w: 1024, h: 768})
 - Save to file:
 
 ```js
-saveSnapshot('./tmp/out.png', {host, password}, {w: 1024, h: 768})
+saveSnapshot('./tmp/out.png', {host, password}, {})
   .then((filePath) => {
     expect(filePath).toBeA('string');
     expect(filePath).toEqual('./tmp/out.png');
