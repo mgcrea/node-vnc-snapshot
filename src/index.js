@@ -42,7 +42,7 @@ export class VncSnapshot {
 	  // This causes the first 'data' events to be lost during the Promise handling
 	  // Avoid this by wrapping it in a "new-style" stream
 	  // See https://nodejs.org/api/stream.html#stream_readable_wrap_stream
-	  let readStream = new Readable().wrap(png.pack());
+	  let readStream = new Readable().wrap(fullPng.pack());
 	  resolved = true;
 	  resolve(readStream);
 	}
