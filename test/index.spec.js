@@ -14,11 +14,12 @@ Promise.promisifyAll(fs);
 const PNG_HEADER = new Buffer([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 
 const host = process.env.NODE_VNC_HOST || 'localhost';
+const port = process.env.NODE_VNC_PORT || '5900';
 const password = process.env.NODE_VNC_PASSWORD || '';
 
 describe('parser', () => {
   it('should have a valid signature and be parsable', () =>
-    takeSnapshot({host, password}, {w: 1024, h: 768})
+    takeSnapshot({host, port, password}, {})
       .then((buffer) => {
         expect(buffer).toBeA(Buffer);
         expect(buffer.slice(0, 8).compare(PNG_HEADER)).toEqual(0);
@@ -37,7 +38,7 @@ describe('parser', () => {
       })
   ).timeout(5000);
   it('should properly save screenshot', () =>
-    saveSnapshot('./tmp/out.png', {host, password}, {w: 1024, h: 768})
+    saveSnapshot('./tmp/out.png', {host, port, password}, {})
       .then((filePath) => {
         expect(filePath).toBeA('string');
         expect(filePath).toEqual('./tmp/out.png');
