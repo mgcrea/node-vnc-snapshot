@@ -1,8 +1,8 @@
 
 import fs from 'fs';
 import rfb from 'rfb2';
-import gm from 'gm';
 import {PNG} from 'pngjs';
+import {Readable} from 'stream';
 
 import {parseRectAsRGBABuffer} from './utils/parse';
 
@@ -23,26 +23,29 @@ export class VncSnapshot {
   take(options = {}) {
     const rc = this.rc;
     return new Promise((resolve, reject) => {
-      rc.once('rect', (rect) => {
+      let fullPng = new PNG({width: rc.width, height: rc.height});
+      let pixelsToReceive = rc.width * rc.height;
+      let resolved = false;
+      rc.on('rect', (rect) => {
+	if (resolved)
+	  return;
         // Build PNG
         const png = new PNG({width: rect.width, height: rect.height});
         png.data = parseRectAsRGBABuffer(rect);
-        png.on('error', reject);
-        let readStream = png.pack();
-        // Required to have a proper file
-        readStream = gm(readStream);
-        if (options.format || options.f) {
-          readStream = readStream.setFormat(options.format || options.f);
-        }
-        if (options.antialias || options.a) {
-          readStream = readStream.antialias(!!(options.antialias || options.a));
-        }
-        if (options.width || options.w || options.height || options.h) {
-          readStream = readStream.resize(options.width || options.w || null, options.height || options.h || null, (options.force || options.f) ? '!' : null);
-        }
-        readStream = readStream.stream();
-        readStream.on('error', reject);
-        resolve(readStream);
+	png.bitblt(fullPng, 0, 0, rect.width, rect.height, rect.x, rect.y);
+	pixelsToReceive -= rect.width * rect.height;
+	// XXX this is an approximation: we count on receiving just the right number of pixels without overlap.
+	// If the server sends the same part of the screen two or more times, we may be missing other parts.
+	if (pixelsToReceive <= 0) {
+	  fullPng.on('error', reject);
+	  // pngjs (as of 3.4.0 at least) returns an "old-style" stream, which does not implement the full Readable interface.
+	  // This causes the first 'data' events to be lost during the Promise handling
+	  // Avoid this by wrapping it in a "new-style" stream
+	  // See https://nodejs.org/api/stream.html#stream_readable_wrap_stream
+	  let readStream = new Readable().wrap(fullPng.pack());
+	  resolved = true;
+	  resolve(readStream);
+	}
       });
       rc.requestUpdate(false, 0, 0, rc.width, rc.height);
     });
